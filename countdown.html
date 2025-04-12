@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nedräkning</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #00ff00; /* Neongrönt */
+      color: #000000; /* Svart text */
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .countdown-container {
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .countdown {
+      font-size: 2rem;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .countdown div {
+      margin: 0 10px;
+    }
+
+    @media (max-width: 600px) {
+      .countdown {
+        flex-direction: column;
+      }
+      .countdown div {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown-container">
+    <h1>Nedräkning till tisdag 15 april 2025 kl 12:00</h1>
+    <div class="countdown">
+      <div><span id="days">0</span> dagar</div>
+      <div><span id="hours">0</span> timmar</div>
+      <div><span id="minutes">0</span> minuter</div>
+      <div><span id="seconds">0</span> sekunder</div>
+    </div>
+  </div>
+
+  <script>
+    const countdownDate = new Date("2025-04-15T12:00:00+02:00").getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    };
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
