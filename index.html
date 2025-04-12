@@ -22,39 +22,33 @@
       max-width: 600px;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-    }
-
     .countdown {
-      font-size: 2rem;
+      font-size: 4rem;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+      gap: 20px;
     }
 
-    .countdown div {
-      margin: 0 10px;
+    .countdown span {
+      min-width: 80px;
+      display: inline-block;
     }
 
     @media (max-width: 600px) {
       .countdown {
         flex-direction: column;
       }
-      .countdown div {
-        margin-bottom: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="countdown-container">
-    <h1>Nedräkning till tisdag 15 april 2025 kl 12:00</h1>
     <div class="countdown">
-      <div><span id="days">0</span> dagar</div>
-      <div><span id="hours">0</span> timmar</div>
-      <div><span id="minutes">0</span> minuter</div>
-      <div><span id="seconds">0</span> sekunder</div>
+      <span id="days">00</span>
+      <span id="hours">00</span>
+      <span id="minutes">00</span>
+      <span id="seconds">00</span>
+      <span id="milliseconds">000</span>
     </div>
   </div>
 
@@ -69,15 +63,17 @@
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
 
-      document.getElementById("days").innerText = days;
-      document.getElementById("hours").innerText = hours;
-      document.getElementById("minutes").innerText = minutes;
-      document.getElementById("seconds").innerText = seconds;
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+      document.getElementById("milliseconds").innerText = String(milliseconds).padStart(3, '0');
     };
 
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown, 33); // cirka 30 fps
   </script>
 </body>
 </html>
