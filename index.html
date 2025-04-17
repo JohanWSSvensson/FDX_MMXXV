@@ -52,7 +52,6 @@
       cursor: pointer;
       margin-bottom: 40px;
       z-index: 2;
-      animation: rgbShift 0.6s infinite;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -60,25 +59,29 @@
     }
 
     .play-icon, .pause-icon {
-      position: absolute;
-      width: 0;
-      height: 0;
+      animation: rgbShift 0.6s infinite;
     }
 
     .play-icon {
+      width: 0;
+      height: 0;
       border-left: 30px solid black;
       border-top: 20px solid transparent;
       border-bottom: 20px solid transparent;
     }
 
     .pause-icon {
-      display: flex;
+      display: none;
+      flex-direction: row;
       gap: 8px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
     }
 
     .pause-icon div {
       width: 10px;
-      height: 40px;
+      height: 100%;
       background-color: black;
     }
 
@@ -118,7 +121,7 @@
 
   <button class="play-button" id="play-btn" onclick="toggleMusic()" aria-label="Play/Pause">
     <div id="play-icon" class="play-icon"></div>
-    <div id="pause-icon" class="pause-icon" style="display: none;">
+    <div id="pause-icon" class="pause-icon">
       <div></div><div></div>
     </div>
   </button>
