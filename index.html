@@ -45,23 +45,41 @@
     }
 
     .play-button {
-      font-size: 2.5rem;
-      padding: 10px 20px;
+      width: 80px;
+      height: 80px;
       background-color: transparent;
-      color: #000;
       border: none;
       cursor: pointer;
       margin-bottom: 40px;
       z-index: 2;
       animation: rgbShift 0.6s infinite;
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan,
-        0 2px blue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
-    .play-button:hover {
-      transform: scale(1.2);
+    .play-icon, .pause-icon {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    .play-icon {
+      border-left: 30px solid black;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+    }
+
+    .pause-icon {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pause-icon div {
+      width: 10px;
+      height: 40px;
+      background-color: black;
     }
 
     .noise {
@@ -98,7 +116,12 @@
 </head>
 <body>
 
-  <button class="play-button" id="play-btn" onclick="toggleMusic()">▶</button>
+  <button class="play-button" id="play-btn" onclick="toggleMusic()" aria-label="Play/Pause">
+    <div id="play-icon" class="play-icon"></div>
+    <div id="pause-icon" class="pause-icon" style="display: none;">
+      <div></div><div></div>
+    </div>
+  </button>
 
   <div class="countdown-container">
     <div class="countdown">
@@ -142,13 +165,17 @@
 
     const toggleMusic = () => {
       const audio = document.getElementById("bg-music");
-      const btn = document.getElementById("play-btn");
+      const playIcon = document.getElementById("play-icon");
+      const pauseIcon = document.getElementById("pause-icon");
+
       if (audio.paused) {
         audio.play();
-        btn.innerText = '⏸';
+        playIcon.style.display = "none";
+        pauseIcon.style.display = "flex";
       } else {
         audio.pause();
-        btn.innerText = '▶';
+        playIcon.style.display = "block";
+        pauseIcon.style.display = "none";
       }
     };
   </script>
