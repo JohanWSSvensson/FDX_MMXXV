@@ -45,18 +45,23 @@
     }
 
     .play-button {
-      font-size: 1rem;
+      font-size: 2.5rem;
       padding: 10px 20px;
-      background-color: black;
-      color: #00ff00;
+      background-color: transparent;
+      color: #000;
       border: none;
       cursor: pointer;
       margin-bottom: 40px;
       z-index: 2;
+      animation: rgbShift 0.6s infinite;
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan,
+        0 2px blue;
     }
 
     .play-button:hover {
-      background-color: #222;
+      transform: scale(1.2);
     }
 
     .noise {
@@ -93,7 +98,7 @@
 </head>
 <body>
 
-  <button class="play-button" onclick="playMusic()">▶</button>
+  <button class="play-button" id="play-btn" onclick="toggleMusic()">▶</button>
 
   <div class="countdown-container">
     <div class="countdown">
@@ -132,15 +137,20 @@
       document.getElementById("milliseconds").innerText = String(milliseconds).padStart(3, '0');
     };
 
-    const playMusic = () => {
-      const audio = document.getElementById("bg-music");
-      audio.play().catch(err => {
-        console.log("Ljudet kunde inte spelas:", err);
-      });
-    };
-
     updateCountdown();
     setInterval(updateCountdown, 33);
+
+    const toggleMusic = () => {
+      const audio = document.getElementById("bg-music");
+      const btn = document.getElementById("play-btn");
+      if (audio.paused) {
+        audio.play();
+        btn.innerText = '⏸';
+      } else {
+        audio.pause();
+        btn.innerText = '▶';
+      }
+    };
   </script>
 
 </body>
