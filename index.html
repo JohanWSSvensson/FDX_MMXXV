@@ -45,11 +45,13 @@
     }
 
     .play-button {
-      font-size: 2.5rem;
-      padding: 10px 20px;
+      width: 80px;
+      height: 80px;
       background-color: transparent;
-      color: #000;
-      border: none;
+      border: 2px solid black;
+      border-radius: 50%;
+      font-size: 2.5rem;
+      color: black;
       cursor: pointer;
       margin-bottom: 40px;
       z-index: 2;
@@ -58,10 +60,20 @@
         2px 0 red,
         -2px 0 cyan,
         0 2px blue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
-    .play-button:hover {
-      transform: scale(1.2);
+    .play-button::before {
+      content: "▶";
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .play-button.playing::before {
+      content: "⏸";
     }
 
     .noise {
@@ -98,7 +110,7 @@
 </head>
 <body>
 
-  <button class="play-button" id="play-btn" onclick="toggleMusic()">▶</button>
+  <button class="play-button" id="play-btn" onclick="toggleMusic()" aria-label="Play/Pause"></button>
 
   <div class="countdown-container">
     <div class="countdown">
@@ -145,10 +157,10 @@
       const btn = document.getElementById("play-btn");
       if (audio.paused) {
         audio.play();
-        btn.innerText = '⏸';
+        btn.classList.add("playing");
       } else {
         audio.pause();
-        btn.innerText = '▶';
+        btn.classList.remove("playing");
       }
     };
   </script>
