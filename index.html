@@ -36,7 +36,7 @@
         2px 0 red,
         -2px 0 cyan,
         0 2px blue;
-      animation: rgbShift 0.6s infinite;
+      animation: rgbShiftText 0.6s infinite;
     }
 
     .countdown span {
@@ -58,8 +58,10 @@
       position: relative;
     }
 
-    .play-icon, .pause-icon {
-      animation: rgbShift 0.6s infinite;
+    /* Gemensam glitch för form-element */
+    .glitch-shape {
+      animation: rgbShiftShape 0.6s infinite;
+      filter: drop-shadow(2px 0 red) drop-shadow(-2px 0 cyan) drop-shadow(0 2px blue);
     }
 
     .play-icon {
@@ -98,7 +100,8 @@
       pointer-events: none;
     }
 
-    @keyframes rgbShift {
+    /* För text (nedräkningen) */
+    @keyframes rgbShiftText {
       0%, 100% {
         text-shadow: 2px 0 red, -2px 0 cyan, 0 2px blue;
       }
@@ -107,6 +110,19 @@
       }
       66% {
         text-shadow: 1px -1px red, -1px 1px cyan, 2px 2px blue;
+      }
+    }
+
+    /* För former (play/pause) */
+    @keyframes rgbShiftShape {
+      0%, 100% {
+        filter: drop-shadow(2px 0 red) drop-shadow(-2px 0 cyan) drop-shadow(0 2px blue);
+      }
+      33% {
+        filter: drop-shadow(-2px 0 red) drop-shadow(2px 0 cyan) drop-shadow(0 -2px blue);
+      }
+      66% {
+        filter: drop-shadow(1px -1px red) drop-shadow(-1px 1px cyan) drop-shadow(2px 2px blue);
       }
     }
 
@@ -120,8 +136,8 @@
 <body>
 
   <button class="play-button" id="play-btn" onclick="toggleMusic()" aria-label="Play/Pause">
-    <div id="play-icon" class="play-icon"></div>
-    <div id="pause-icon" class="pause-icon">
+    <div id="play-icon" class="play-icon glitch-shape"></div>
+    <div id="pause-icon" class="pause-icon glitch-shape">
       <div></div><div></div>
     </div>
   </button>
