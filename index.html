@@ -17,10 +17,12 @@
       height: 100vh;
       text-align: center;
       overflow: hidden;
+      position: relative;
     }
 
     .countdown-container {
       max-width: 600px;
+      z-index: 2;
     }
 
     .countdown {
@@ -29,41 +31,50 @@
       justify-content: center;
       gap: 20px;
       position: relative;
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan,
+        0 2px blue;
+      animation: rgbShift 0.6s infinite;
     }
 
     .countdown span {
       min-width: 80px;
       display: inline-block;
-      position: relative;
     }
 
-    .glitch {
-      animation: glitch 1s infinite;
+    @keyframes rgbShift {
+      0%, 100% {
+        text-shadow:
+          2px 0 red,
+          -2px 0 cyan,
+          0 2px blue;
+      }
+      33% {
+        text-shadow:
+          -2px 0 red,
+          2px 0 cyan,
+          0 -2px blue;
+      }
+      66% {
+        text-shadow:
+          1px -1px red,
+          -1px 1px cyan,
+          2px 2px blue;
+      }
     }
 
-    @keyframes glitch {
-      0% {
-        transform: translate(0);
-        opacity: 1;
-      }
-      20% {
-        transform: translate(-2px, 2px);
-      }
-      40% {
-        transform: translate(2px, -2px);
-        opacity: 0.8;
-      }
-      60% {
-        transform: translate(-1px, 1px);
-      }
-      80% {
-        transform: translate(1px, -1px);
-        opacity: 0.9;
-      }
-      100% {
-        transform: translate(0);
-        opacity: 1;
-      }
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif');
+      background-size: cover;
+      opacity: 0.05;
+      z-index: 1;
+      pointer-events: none;
     }
 
     @media (max-width: 600px) {
@@ -75,7 +86,7 @@
 </head>
 <body>
   <div class="countdown-container">
-    <div class="countdown glitch">
+    <div class="countdown">
       <span id="days">00</span>
       <span id="hours">00</span>
       <span id="minutes">00</span>
@@ -83,6 +94,8 @@
       <span id="milliseconds">000</span>
     </div>
   </div>
+
+  <div class="noise"></div>
 
   <script>
     const countdownDate = new Date("2025-08-01T00:00:00+02:00").getTime();
