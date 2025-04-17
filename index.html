@@ -16,6 +16,7 @@
       align-items: center;
       height: 100vh;
       text-align: center;
+      overflow: hidden;
     }
 
     .countdown-container {
@@ -27,11 +28,42 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      position: relative;
     }
 
     .countdown span {
       min-width: 80px;
       display: inline-block;
+      position: relative;
+    }
+
+    .glitch {
+      animation: glitch 1s infinite;
+    }
+
+    @keyframes glitch {
+      0% {
+        transform: translate(0);
+        opacity: 1;
+      }
+      20% {
+        transform: translate(-2px, 2px);
+      }
+      40% {
+        transform: translate(2px, -2px);
+        opacity: 0.8;
+      }
+      60% {
+        transform: translate(-1px, 1px);
+      }
+      80% {
+        transform: translate(1px, -1px);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(0);
+        opacity: 1;
+      }
     }
 
     @media (max-width: 600px) {
@@ -43,7 +75,7 @@
 </head>
 <body>
   <div class="countdown-container">
-    <div class="countdown">
+    <div class="countdown glitch">
       <span id="days">00</span>
       <span id="hours">00</span>
       <span id="minutes">00</span>
