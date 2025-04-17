@@ -8,8 +8,8 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #00ff00; /* Neongrönt */
-      color: #000000; /* Svart text */
+      background-color: #00ff00;
+      color: #000000;
       font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
@@ -18,6 +18,7 @@
       text-align: center;
       overflow: hidden;
       position: relative;
+      flex-direction: column;
     }
 
     .countdown-container {
@@ -43,25 +44,19 @@
       display: inline-block;
     }
 
-    @keyframes rgbShift {
-      0%, 100% {
-        text-shadow:
-          2px 0 red,
-          -2px 0 cyan,
-          0 2px blue;
-      }
-      33% {
-        text-shadow:
-          -2px 0 red,
-          2px 0 cyan,
-          0 -2px blue;
-      }
-      66% {
-        text-shadow:
-          1px -1px red,
-          -1px 1px cyan,
-          2px 2px blue;
-      }
+    .play-button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: black;
+      color: #00ff00;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 40px;
+      z-index: 2;
+    }
+
+    .play-button:hover {
+      background-color: #222;
     }
 
     .noise {
@@ -77,6 +72,18 @@
       pointer-events: none;
     }
 
+    @keyframes rgbShift {
+      0%, 100% {
+        text-shadow: 2px 0 red, -2px 0 cyan, 0 2px blue;
+      }
+      33% {
+        text-shadow: -2px 0 red, 2px 0 cyan, 0 -2px blue;
+      }
+      66% {
+        text-shadow: 1px -1px red, -1px 1px cyan, 2px 2px blue;
+      }
+    }
+
     @media (max-width: 600px) {
       .countdown {
         flex-direction: column;
@@ -85,6 +92,9 @@
   </style>
 </head>
 <body>
+
+  <button class="play-button" onclick="playMusic()">▶ Spela musik</button>
+
   <div class="countdown-container">
     <div class="countdown">
       <span id="days">00</span>
@@ -96,6 +106,11 @@
   </div>
 
   <div class="noise"></div>
+
+  <audio id="bg-music" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+    Din webbläsare stödjer inte ljuduppspelning.
+  </audio>
 
   <script>
     const countdownDate = new Date("2025-08-01T00:00:00+02:00").getTime();
@@ -117,8 +132,16 @@
       document.getElementById("milliseconds").innerText = String(milliseconds).padStart(3, '0');
     };
 
+    const playMusic = () => {
+      const audio = document.getElementById("bg-music");
+      audio.play().catch(err => {
+        console.log("Ljudet kunde inte spelas:", err);
+      });
+    };
+
     updateCountdown();
-    setInterval(updateCountdown, 33); // cirka 30 fps
+    setInterval(updateCountdown, 33);
   </script>
+
 </body>
 </html>
