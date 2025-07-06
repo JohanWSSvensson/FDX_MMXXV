@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FDX MMXXV</title>
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
   <style>
@@ -33,10 +33,7 @@
       justify-content: center;
       gap: 20px;
       position: relative;
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan,
-        0 2px blue;
+      text-shadow: 2px 0 red, -2px 0 cyan, 0 2px blue;
       animation: rgbShiftText 0.6s infinite;
     }
 
@@ -100,19 +97,18 @@
       pointer-events: none;
     }
 
-    /* Osynlig knapp */
+    /* Osynlig knapp (klickbar när aktiv) */
     #secret-button {
       position: absolute;
       bottom: 20px;
       right: 20px;
       width: 100px;
       height: 100px;
-      background: rgba(0,0,0,0.05); /* lätt synlig bakgrund */
-      border: 2px dashed black;
-      border-radius: 10px;
+      background: transparent;
+      border: none;
       z-index: 10;
       cursor: pointer;
-      display: block; /* <-- gör den synlig direkt för test */
+      display: none;
     }
 
     /* Koordinater */
@@ -179,7 +175,7 @@
   </div>
 
   <button id="secret-button" onclick="revealCoordinates()"></button>
-  <div id="coordinates">59.4370° N, 24.7536° E</div>
+  <div id="coordinates"></div>
 
   <div class="noise"></div>
 
@@ -230,7 +226,7 @@
       }
     };
 
-    // När låten spelat klart en gång (loopar alltså inte första varvet)
+    // Visa knappen efter första varvet
     audio.addEventListener("ended", () => {
       if (!revealed) {
         secretButton.style.display = "block";
@@ -238,10 +234,24 @@
       }
     });
 
+    // Visa glitchade koordinater tillfälligt
     const revealCoordinates = () => {
+      const base = "59.4370° N, 24.7536° E";
+      const glitch = base.split('').map(char => {
+        const rand = Math.random();
+        if (rand < 0.3) {
+          return String.fromCharCode(0x0300 + Math.floor(Math.random() * 96));
+        } else if (rand < 0.6) {
+          return String.fromCharCode(0x25A0 + Math.floor(Math.random() * 50));
+        }
+        return char;
+      }).join('');
+
+      coordinates.innerText = glitch;
       coordinates.style.display = "block";
       setTimeout(() => {
         coordinates.style.display = "none";
+        coordinates.innerText = "";
       }, 1000);
     };
   </script>
